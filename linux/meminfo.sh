@@ -1,4 +1,22 @@
 #!/bin/bash
+
+#DESCRIPTION
+#   Check memory on linux systems
+
+#NOTES 
+#   File Name  : meminfo.sh
+#   Author     : Miquel Mariano - @miquelMariano | https://miquelmariano.github.io
+#   Version    : 1
+
+#USAGE
+#   Put this script on /var/prtg/scriptsxml and use "SSH script advanced sensor XML"
+#   
+#CHANGELOG
+#   v1 26/08/2019   Script creation
+#   
+
+
+
 meminfo="/usr/bin/free"
 
 xmlresult=`cat <<EOF
