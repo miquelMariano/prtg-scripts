@@ -9,7 +9,8 @@
 #   Version    : 1
 
 #USAGE
-#   Put this script on /var/prtg/scripts and use "SSH Sensor"
+#   Put this script on /var/prtg/scripts and use "SSH Script"
+#	It's necessari add ssh credentials on device
 #   Command return follow results:
 #   [root@esxi:/var/prtg/scripts] esxcli vsan debug resync summary get
 #       Total Number Of Resyncing Objects: 0
