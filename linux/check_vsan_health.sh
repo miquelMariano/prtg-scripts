@@ -10,7 +10,7 @@
 
 #USAGE
 #   Put this script on /var/prtg/scrips and use "SSH Script"
-#	It's necessari add ssh credentials on device
+#	It's necessary add ssh credentials on device
 #   Command return follow results:
 #     [root@esxi:/var/prtg/scripts] esxcli vsan debug object health summary get
 #     Health Status                                     Number Of Objects
