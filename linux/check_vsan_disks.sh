@@ -9,9 +9,11 @@
 #   Version    : 1
 
 #USAGE
-#   Put this script on /var/prtg/scripsxml and use "SSH Advanced Script"
-#	It's necessary add ssh credentials on device
-#   Command return follow results:
+#   - Put this script on /var/prtg/scripsxml and use "SSH Advanced Script"
+#	- Required parameters, last value indicate debug mode (1): esxi01.corp.local "naa.55cd2e414d79d151 naa.50000397980bfbcd naa.50000396381bc461 naa.50000397980bd569 naa.50000397985aed01 naa.55cd2e414d59cebb naa.50000396381b3c51 naa.5000c50088604113 naa.5000c500995ed2a7 naa.5000c50099496923" 0
+#	- It's necessary add ssh credentials on device
+#	- Set sensor timeout to 120 seconds 
+#   - Command return follow results:
 #[root@esxi241029:/var/prtg/scriptsxml] esxcli vsan debug disk overview
 #UUID                                  Name                  Owner                    Ver  Disk Group                            Disk Tier    SSD  Metadata  Ops    Congestion  CMMDS   VSI  Capacity   Used       Reserved
 #------------------------------------  --------------------  -----------------------  ---  ------------------------------------  ---------  -----  --------  -----  ----------  -----  ----  ---------  ---------  ---------
@@ -32,46 +34,136 @@
 #520aac9a-ef52-7b3d-2bd1-af47e093f5c4  naa.50000396381bc21d  esxi241045.domain.local    5  52041fb4-3bdd-ca2b-6d04-63dc2d1e62cd  Capacity   false  green     green  No           true  true  558.90 GB  520.27 GB  78.05 GB
 #5287635d-ce4a-d68f-5e1d-dc0cc8a21abb  naa.55cd2e414d59cebb  esxi241112.domain.LOCAL    5  5287635d-ce4a-d68f-5e1d-dc0cc8a21abb  Cache       true  green     green  No           true  true  N/A        N/A        N/A
 #
-#[root@indme241029:/var/prtg/scriptsxml] esxcli vsan debug disk overview | grep indme241112.INDAR.LOCAL
-#5288e6ce-eb70-dca3-4374-f46a936c3ad9  naa.55cd2e414d79d151  indme241112.INDAR.LOCAL    5  5288e6ce-eb70-dca3-4374-f46a936c3ad9  Cache       true  green     green  No           true  true  N/A        N/A        N/A
-#527e4b77-7bfb-7923-9437-bb02949975f2  naa.50000397980bfbcd  indme241112.INDAR.LOCAL    5  5288e6ce-eb70-dca3-4374-f46a936c3ad9  Capacity   false  green     green  No           true  true  558.90 GB  536.15 GB  120.28 GB
-#35229b48a-446b-8fa3-2c36-d56b32af14e9  naa.50000396381bc461  indme241112.INDAR.LOCAL    5  5288e6ce-eb70-dca3-4374-f46a936c3ad9  Capacity   false  green     green  No           true  true  558.90 GB  530.98 GB  131.80 GB
-#52dcea52-9943-5549-c29d-7e123c9abf2e  naa.50000397980bd569  indme241112.INDAR.LOCAL    5  5288e6ce-eb70-dca3-4374-f46a936c3ad9  Capacity   false  green     green  No           true  true  558.90 GB  513.07 GB  98.77 GB
-#52189a1f-4071-d500-3c49-bfdebb8fbea7  naa.50000397985aed01  indme241112.INDAR.LOCAL    5  5288e6ce-eb70-dca3-4374-f46a936c3ad9  Capacity   false  green     green  No           true  true  558.90 GB  517.96 GB  114.60 GB
-#5287635d-ce4a-d68f-5e1d-dc0cc8a21abb  naa.55cd2e414d59cebb  indme241112.INDAR.LOCAL    5  5287635d-ce4a-d68f-5e1d-dc0cc8a21abb  Cache       true  green     green  No           true  true  N/A        N/A        N/A
-#52233743-4253-9131-80f3-7983f5e50a4f  naa.50000396381b3c51  indme241112.INDAR.LOCAL    5  5287635d-ce4a-d68f-5e1d-dc0cc8a21abb  Capacity   false  green     green  No           true  true  558.90 GB  547.86 GB  151.16 GB
-#52d2b3ab-38b6-3531-5450-6b75c883d617  naa.5000c50088604113  indme241112.INDAR.LOCAL    5  5287635d-ce4a-d68f-5e1d-dc0cc8a21abb  Capacity   false  green     green  No           true  true  558.90 GB  519.67 GB  102.77 GB
-#5254fa18-2056-8a8e-fdb7-98d686f97b99  naa.5000c500995ed2a7  indme241112.INDAR.LOCAL    5  5287635d-ce4a-d68f-5e1d-dc0cc8a21abb  Capacity   false  green     green  No           true  true  558.90 GB  529.07 GB  122.78 GB
-#52d55fe7-fa6b-d31f-009e-4f0f641b0f0c  naa.5000c50099496923  indme241112.INDAR.LOCAL    5  5287635d-ce4a-d68f-5e1d-dc0cc8a21abb  Capacity   false  green     green  No           true  true  558.90 GB  526.73 GB  126.74 GB
+#
+#
+#[root@esxi241029:/var/prtg/scriptsxml] esxcli vsan debug disk overview |awk '{print $2,$3,$4,$6,$9,$13,$15}'
+#Name Owner Ver Group SSD CMMDS Capacity
+#-------------------- ----------------------- --- --------- ----- --------- ---------
+#naa.55cd2e404c52bdbd esxi241029.domain.local 5 Cache green N/A N/A
+#naa.50000397980bd635 esxi241029.domain.local 5 Capacity green 558.90 534.56
+#naa.50000397980bf0c5 esxi241029.domain.local 5 Capacity green 558.90 515.14
+#naa.50000397980bc371 esxi241029.domain.local 5 Capacity green 558.90 544.52
+#naa.50000397980bd4c1 esxi241029.domain.local 5 Capacity green 558.90 538.32
+#naa.55cd2e414d79d151 esxi241112.domain.LOCAL 5 Cache green N/A N/A
+#naa.50000397980bfbcd esxi241112.domain.LOCAL 5 Capacity green 558.90 535.81
+#naa.50000396381bc461 esxi241112.domain.LOCAL 5 Capacity green 558.90 527.15
+#naa.50000397980bd569 esxi241112.domain.LOCAL 5 Capacity green 558.90 514.29
+#naa.50000397985aed01 esxi241112.domain.LOCAL 5 Capacity green 558.90 523.96
+#naa.55cd2e414d79d164 esxi241045.domain.local 5 Cache green N/A N/A
+#naa.5000c5009958d5f3 esxi241045.domain.local 5 Capacity green 558.90 556.27
+#naa.5000c5009958d447 esxi241045.domain.local 5 Capacity green 558.90 529.93
+#naa.50000396381b3739 esxi241045.domain.local 5 Capacity green 558.90 531.58
+#naa.50000396381bc21d esxi241045.domain.local 5 Capacity green 558.90 514.21
+#naa.55cd2e414d79d1a2 esxi241045.domain.local 5 Cache green N/A N/A
+#naa.50000396381baa25 esxi241045.domain.local 5 Capacity green 558.90 515.45
+#naa.50000396381acedd esxi241045.domain.local 5 Capacity green 558.90 524.92
+#naa.5000039638200b6d esxi241045.domain.local 5 Capacity green 558.90 535.14
+#naa.50000396381b8a35 esxi241045.domain.local 5 Capacity green 558.90 522.82
+#naa.55cd2e414d59cebb esxi241112.domain.LOCAL 5 Cache green N/A N/A
+#naa.50000396381b3c51 esxi241112.domain.LOCAL 5 Capacity green 558.90 525.23
+#naa.5000c50088604113 esxi241112.domain.LOCAL 5 Capacity green 558.90 526.61
+#naa.5000c500995ed2a7 esxi241112.domain.LOCAL 5 Capacity green 558.90 521.61
+#naa.5000c50099496923 esxi241112.domain.LOCAL 5 Capacity green 558.90 522.80
+#naa.55cd2e414d5845a0 esxi241029.domain.local 5 Cache green N/A N/A
+#naa.5000c50088602ca3 esxi241029.domain.local 5 Capacity green 558.90 524.34
+#naa.50000396381b325d esxi241029.domain.local 5 Capacity green 558.90 529.45
+#naa.50000396381b2ee1 esxi241029.domain.local 5 Capacity green 558.90 528.50
+#naa.5000c50088b99d07 esxi241029.domain.local 5 Capacity green 558.90 535.09
+#
+#
 #
 #
 #
 #CHANGELOG
 #   v1 25/10/2019   Script creation
-#
+#	v2 31/10/2019	Add variables and adapt to PRTG xml result
 
 esxi=$1
+disks=$2
+debug=$3
 
-result=$(esxcli vsan debug disk overview | grep $esxi)
+echo "<?xml version="1.0" encoding='UTF-8'?>
+<prtg>"
 
-echo "$result" | awk 'FNR == 2 {print $3}'
+for disk in $disks; do
 
+result=$(esxcli vsan debug disk overview | grep $esxi |grep $disk |awk '{print $2,$3,$4,$5,$6,$9,$13,$15}')
+#echo "$result"
 
-xmlresult=`cat <<EOF
-<?xml version="1.0" encoding='UTF-8'?>
-            <prtg>
-            <result>
-            <channel>First channel</channel>
-            <value>10</value>
-            </result>
-            <result>
-            <channel>Second channel</channel>
-            <value>20</value>
-            </result>
-            </prtg>
-EOF
-`
-echo "$xmlresult"
+#Disk name
+disk_name=$(echo "$result" |awk '{print $1}')
+
+#Disk owner
+disk_owner=$(echo "$result" |awk '{print $2}')
+
+#Disk version
+disk_version=$(echo $result |awk '{print $3}')
+
+#Disk group
+disk_group=$(echo $result |awk '{print $4}')
+
+#Disk tier
+disk_tier=$(echo $result |awk '{print $5}')
+
+#disk_status
+disk_status=$(echo $result |awk '{print $6}')
+
+#disk_capacity
+disk_capacity=$(echo $result |awk '{print $7}')
+
+#disk_used
+disk_used=$(echo $result |awk '{print $8}')
+
+if [ $debug == "1" ]; then
+  echo Disk name: $disk_name
+  echo Disk version: $disk_version
+  echo Disk group: $disk_group
+  echo Disk tier: $disk_tier
+  echo Disk status: $disk_status
+  echo Disk capacity: $disk_capacity
+  echo Disk used: $disk_used
+  echo Disk free: $disk_free
+  echo Disk percent used: $disk_percent_used
+fi
+
+if [ $disk_status == "green" ]; then
+  prtg_disk_status=0
+else
+  prtg_disk_status=5
+fi
+
+if [ $disk_tier == "Cache" ]; then
+  echo "<result>
+  <channel>STATUS: $disk_tier disk $disk_name</channel>
+  <value>$prtg_disk_status</value>
+  <LimitMode>1</LimitMode>
+  <LimitMaxError>1</LimitMaxError>
+  </result>"
+else
+  #disk_free > Discarding floating points
+  disk_free=$(expr ${disk_capacity%\.*} - ${disk_used%\.*})
+  #disk_percent > Calculate % usage
+  disk_percent_used=$(expr ${disk_used%\.*} \* 100 / ${disk_capacity%\.*})
+  echo "<result>
+  <channel>STATUS: $disk_tier disk $disk_name</channel>
+  <value>$prtg_disk_status</value>
+  <LimitMode>1</LimitMode>
+  <LimitMaxError>1</LimitMaxError>
+  </result>
+  <result>
+  <channel>USAGE: $disk_tier disk $disk_name</channel>
+  <unit>Percent</unit>
+  <value>$disk_percent_used</value>
+  <LimitMode>1</LimitMode>
+  <LimitMaxWarning>90</LimitMaxWarning>
+  <LimitMaxError>95</LimitMaxError>
+  </result>"
+fi
+
+done
+
+echo "<text>vSAN disk Heahth check | Host: $disk_owner </text>
+</prtg>"
 
 exit 0
 
