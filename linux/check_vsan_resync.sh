@@ -9,9 +9,9 @@
 #   Version    : 1
 
 #USAGE
-#   Put this script on /var/prtg/scripts and use "SSH Script"
-#	It's necessari add ssh credentials on device
-#   Command return follow results:
+#   - Put this script on /var/prtg/scripts and use "SSH Script"
+#	- It's necessary add ssh credentials on device
+#   - Command return follow results:
 #   [root@esxi:/var/prtg/scripts] esxcli vsan debug resync summary get
 #       Total Number Of Resyncing Objects: 0
 #       Total Bytes Left To Resync: 0
@@ -20,7 +20,7 @@
 #   
 #CHANGELOG
 #   v1 29/08/2019   Script creation
-#   
+#   v2 31/10/2019	Add more comments
 
 result=$(esxcli vsan debug resync summary get | grep Bytes | awk '{print $6}')
 
