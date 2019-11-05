@@ -1,11 +1,11 @@
 #!/bin/bash
 
-#./check_gad.sh 00:07
+#./check_gad.sh 00:07 12
 
 LDEV=$1
-instance=2
+instance=$2
 
-raidcom -login maintenance raid-maintenance -I$instance
+#raidcom -login maintenance raid-maintenance -I$instance
 
 result=$(pairdisplay -g GAD -d $LDEV-$LDEV -fxce -l -ITC$instance | grep GAD |awk '{print $7}')
 output=$(pairdisplay -g GAD -d $LDEV-$LDEV -fxce -l -ITC$instance | grep GAD)
