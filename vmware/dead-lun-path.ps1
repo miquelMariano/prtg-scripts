@@ -14,6 +14,7 @@
    v1 20/04/2017  Script creation
    v2 07/07/2017  Formatting log output
    v3 16/10/2017  Formatting for blog post > https://miquelmariano.github.io/2017/10/18/check-ESXi-dead-lun-path/
+   v4 08/11/2019  Add datacenter variable and formatting for PRTG monitoring
   
 #>
 
@@ -29,11 +30,14 @@ if (-not (Get-PSSnapin VMware.VimAutomation.Core -ErrorAction SilentlyContinue))
 #--------------GLOBAL VARS----------------------
 $vCenter = "10.20.20.252"
 $vCenteruser ="administrator@vsphere.local"
+$datacenter = "datacenter"
+
+$prtg_format = "true" #True or False
 
 $PathToCredentials = "C:\Program Files (x86)\PRTG Network Monitor\Custom Sensors\EXEXML" #It is important not to put the last \
 
 $OutputDir = "C:\Program Files (x86)\PRTG Network Monitor\Custom Sensors\EXEXML\log\"
-$OutputFile = "aaa---tata-dead-lun-path-debug.log"
+$OutputFile = $datacenter + "-dead-lun-path-debug.log"
 #--------------GLOBAL VARS---------
 
 
@@ -75,7 +79,7 @@ $log = "`r`n$now vCenter connected!" + $log
 $totaldeadpaths = 0
 $sum_totaldeadpaths = 0
 
-ForEach ($vmhost in get-datacenter aaa---tata | Get-Vmhost){ 
+ForEach ($vmhost in get-datacenter $datacenter | Get-Vmhost){ 
   $now = Get-Date -format "dd-MM-yy HH:mm:ss | "
   $log = "`r`n$now Starting analysis of ESXi "+ $vmhost.name + " analyze | " + $log
   #write-host $vmhost.name
