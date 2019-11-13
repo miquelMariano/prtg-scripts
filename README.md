@@ -1,4 +1,4 @@
-# prtg-scripts
+# PRTG Scripts
 Repositorio de scripts PRTG
 
 
