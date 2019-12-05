@@ -3,17 +3,17 @@
    This script checks cross-storage between datacenters
 
 .NOTES 
-   File Name  : Check_cross-storage.ps1 
+   File Name  : check_cross-storage.ps1 
    Author     : Miquel Mariano - @miquelMariano
    Version    : 2
 
-.USAGE
-	Execute directly
-   
-.CHANGELOG
-   v1	23/11/2016	Script creation
-   v2	
-  
+   v1   23/11/2016  Script creation
+
+.EXAMPLE
+    Execute directly
+    ./check_cross-storage.ps1  
+	
+ 
 #>
 
 $now = Get-Date -format "dd-MM-yyyy HH:mm:ss | "

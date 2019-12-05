@@ -21,13 +21,14 @@
 #CHANGELOG
 #   v1 29/08/2019   Script creation
 #   v2 31/10/2019	Add more comments
+#	v3 02/12/2019	Remove if else. Treshold defined on PRTG channel
 
 result=$(esxcli vsan debug resync summary get | grep Bytes | awk '{print $6}')
 
-#echo $result
+echo "0:$result:$result bytes left to resync"
 
-if [ $result == "0" ]; then
-  echo "0:$result:$result bytes left to resync"
-else
-  echo "2:$result:$result bytes left to resync"
-fi
+#if [ $result == "0" ]; then
+#  echo "0:$result:$result bytes left to resync"
+#else
+#  echo "0:$result:$result bytes left to resync"
+#fi
