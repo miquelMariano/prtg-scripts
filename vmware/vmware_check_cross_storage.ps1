@@ -3,11 +3,12 @@
    This script checks cross-storage between datacenters
 
 .NOTES 
-   File Name  : check_cross-storage.ps1 
+   File Name  : vmware_check_cross_storage.ps1 
    Author     : Miquel Mariano - @miquelMariano
    Version    : 2
 
    v1   23/11/2016  Script creation
+   v2   
 
 .EXAMPLE
     Execute directly

@@ -5,7 +5,7 @@
 .NOTES 
    File Name  : dead-lun-path.ps1 
    Author     : Miquel Mariano - @miquelMariano | https://miquelmariano.github.io
-   Version    : 3
+   Version    : 5
 
 .USAGE
    Execute directly
@@ -15,6 +15,7 @@
    v2 07/07/2017  Formatting log output
    v3 16/10/2017  Formatting for blog post > https://miquelmariano.github.io/2017/10/18/check-ESXi-dead-lun-path/
    v4 08/11/2019  Add datacenter variable and formatting for PRTG monitoring
+   v5 24/03/2020  Change path to "Import-Module" C:\PS6 > C:\PS (https://miquelmariano.github.io/2019/01/09/instalar-powerCLI-10-windows/)
   
 .EXAMPLE
     .\vmware_check_dead_lun_path.ps1 -vCenter 192.168.241.63 -vCenteruser administrator@vsphere.local -datacenter datacenter_name
@@ -36,12 +37,12 @@ $OutputDir = "C:\Program Files (x86)\PRTG Network Monitor\Custom Sensors\EXEXML\
 $OutputFile = $datacenter + "-dead-lun-path-debug.log"
 #--------------GLOBAL VARS---------
 
-Import-Module "C:\PS6\VMware.VimAutomation.Sdk\11.5.0.14898111\VMware.VimAutomation.Sdk.psd1"
-Import-Module "C:\PS6\VMware.VimAutomation.Common\11.5.0.14898112\VMware.VimAutomation.Common.psd1"
-Import-Module "C:\PS6\VMware.Vim\6.7.0.14898114\VMware.Vim.psd1"
-Import-Module "C:\PS6\VMware.VimAutomation.Cis.Core\11.5.0.14898113\VMware.VimAutomation.Cis.Core.psd1"
-Import-Module "C:\PS6\VMware.VimAutomation.Sdk\11.5.0.14898111\VMware.VimAutomation.Sdk.psd1"
-Import-Module "C:\PS6\VMware.VimAutomation.Core\11.5.0.14899560\VMware.VimAutomation.Core.psd1"
+Import-Module "C:\PS\VMware.VimAutomation.Sdk\11.5.0.14898111\VMware.VimAutomation.Sdk.psd1"
+Import-Module "C:\PS\VMware.VimAutomation.Common\11.5.0.14898112\VMware.VimAutomation.Common.psd1"
+Import-Module "C:\PS\VMware.Vim\6.7.0.14898114\VMware.Vim.psd1"
+Import-Module "C:\PS\VMware.VimAutomation.Cis.Core\11.5.0.14898113\VMware.VimAutomation.Cis.Core.psd1"
+Import-Module "C:\PS\VMware.VimAutomation.Sdk\11.5.0.14898111\VMware.VimAutomation.Sdk.psd1"
+Import-Module "C:\PS\VMware.VimAutomation.Core\11.5.0.14899560\VMware.VimAutomation.Core.psd1"
 
 $now = Get-Date -format "dd-MM-yy HH:mm:ss | "
 $log = "`r`n$now Start Check" + $log
