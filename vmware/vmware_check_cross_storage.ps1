@@ -17,14 +17,16 @@
  
 #>
 
+Import-Module "C:\PS\VMware.VimAutomation.Sdk\11.5.0.14898111\VMware.VimAutomation.Sdk.psd1"
+Import-Module "C:\PS\VMware.VimAutomation.Common\11.5.0.14898112\VMware.VimAutomation.Common.psd1"
+Import-Module "C:\PS\VMware.Vim\6.7.0.14898114\VMware.Vim.psd1"
+Import-Module "C:\PS\VMware.VimAutomation.Cis.Core\11.5.0.14898113\VMware.VimAutomation.Cis.Core.psd1"
+Import-Module "C:\PS\VMware.VimAutomation.Sdk\11.5.0.14898111\VMware.VimAutomation.Sdk.psd1"
+Import-Module "C:\PS\VMware.VimAutomation.Core\11.5.0.14899560\VMware.VimAutomation.Core.psd1"
+
 $now = Get-Date -format "dd-MM-yyyy HH:mm:ss | "
 $log = "`r`n$now Start Check" + $log
 
-#Verify if PowerCLI are installed
-if (-not (Get-PSSnapin VMware.VimAutomation.Core -ErrorAction SilentlyContinue))
-{   Try { Add-PSSnapin VMware.VimAutomation.Core -ErrorAction Stop }
-    Catch { Write-Host "Unable to load PowerCLI, is it installed?" -ForegroundColor Red; Exit }
-}
 
 #--------------GLOBAL VARS----------------------
 $vCenter = "10.20.20.252"
