@@ -3,7 +3,7 @@
    This script checks ESXi dead LUN path
 
 .NOTES 
-   File Name  : dead-lun-path.ps1 
+   File Name  : vmware_check_dead_lun_path.ps1 
    Author     : Miquel Mariano - @miquelMariano | https://miquelmariano.github.io
    Version    : 5
 
@@ -26,23 +26,26 @@
 param(
     [string]$vCenter = "ip",
     [string]$vCenteruser = "administrator@vsphere.local",
-  [string]$datacenter = "datacenter"
+    [string]$datacenter = "datacenter"
 )
 
 $prtg_format = "true" #True or False
 
 $PathToCredentials = "C:\Program Files (x86)\PRTG Network Monitor\Custom Sensors\ScriptCredentials\$vCenter" #It is important not to put the last \
 
+$now = Get-Date -format "dd-MM-yyyy_HHmmss"
 $OutputDir = "C:\Program Files (x86)\PRTG Network Monitor\Custom Sensors\EXEXML\log\"
-$OutputFile = $datacenter + "-dead-lun-path-debug.log"
+$OutputFile = $now + "_" + $datacenter + "-dead-lun-path-debug.log"
 #--------------GLOBAL VARS---------
 
+#--------------IMPORT POWERSHELL MODULES----------------------
 Import-Module "C:\PS\VMware.VimAutomation.Sdk\11.5.0.14898111\VMware.VimAutomation.Sdk.psd1"
 Import-Module "C:\PS\VMware.VimAutomation.Common\11.5.0.14898112\VMware.VimAutomation.Common.psd1"
 Import-Module "C:\PS\VMware.Vim\6.7.0.14898114\VMware.Vim.psd1"
 Import-Module "C:\PS\VMware.VimAutomation.Cis.Core\11.5.0.14898113\VMware.VimAutomation.Cis.Core.psd1"
 Import-Module "C:\PS\VMware.VimAutomation.Sdk\11.5.0.14898111\VMware.VimAutomation.Sdk.psd1"
 Import-Module "C:\PS\VMware.VimAutomation.Core\11.5.0.14899560\VMware.VimAutomation.Core.psd1"
+#--------------IMPORT POWERSHELL MODULES----------------------
 
 $now = Get-Date -format "dd-MM-yy HH:mm:ss | "
 $log = "`r`n$now Start Check" + $log

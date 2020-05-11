@@ -2,39 +2,46 @@
 .DESCRIPTION
    This script checks cross-storage between datacenters
 
+   Use PRTG EXE/Script Advanced Sensor
+
 .NOTES 
    File Name  : vmware_check_cross_storage.ps1 
    Author     : Miquel Mariano - @miquelMariano
    Version    : 2
 
-   v1   23/11/2016  Script creation
-   v2   
+   v1   23/11/2016    Script creation
+   v2   11/05/2020    Add Set-PowerCLIConfiguration section. Mandatory with  PRTG
 
 .EXAMPLE
-    Execute directly
-    ./check_cross-storage.ps1  
+    .\vmware_check_cross_storage.ps1 -vCenter 192.168.241.63 -vCenteruser administrator@vsphere.local -datacenter datacenter_name
 	
- 
 #>
 
+#--------------GLOBAL VARS----------------------
+param(
+    [string]$vCenter = "ip",
+    [string]$vCenteruser = "administrator@vsphere.local",
+  [string]$datacenter = "datacenter"
+)
+
+$PathToCredentials = "C:\Program Files (x86)\PRTG Network Monitor\Custom Sensors\ScriptCredentials\$vCenter" #It is important not to put the last \
+
+$now = Get-Date -format "dd-MM-yyyy_HHmmss"
+$OutputDir = "C:\Program Files (x86)\PRTG Network Monitor\Custom Sensors\EXEXML\log\"
+$OutputFile = $now + "_" + $datacenter + "-check-cross-storage.log"
+#--------------GLOBAL VARS----------------------
+
+#--------------IMPORT POWERSHELL MODULES----------------------
 Import-Module "C:\PS\VMware.VimAutomation.Sdk\11.5.0.14898111\VMware.VimAutomation.Sdk.psd1"
 Import-Module "C:\PS\VMware.VimAutomation.Common\11.5.0.14898112\VMware.VimAutomation.Common.psd1"
 Import-Module "C:\PS\VMware.Vim\6.7.0.14898114\VMware.Vim.psd1"
 Import-Module "C:\PS\VMware.VimAutomation.Cis.Core\11.5.0.14898113\VMware.VimAutomation.Cis.Core.psd1"
 Import-Module "C:\PS\VMware.VimAutomation.Sdk\11.5.0.14898111\VMware.VimAutomation.Sdk.psd1"
 Import-Module "C:\PS\VMware.VimAutomation.Core\11.5.0.14899560\VMware.VimAutomation.Core.psd1"
+#--------------IMPORT POWERSHELL MODULES----------------------
 
 $now = Get-Date -format "dd-MM-yyyy HH:mm:ss | "
 $log = "`r`n$now Start Check" + $log
-
-
-#--------------GLOBAL VARS----------------------
-$vCenter = "10.20.20.252"
-$vCenteruser ="administrator@vsphere.local"
-
-$PathToCredentials = "C:\Program Files (x86)\PRTG Network Monitor\Custom Sensors\EXEXML" #It is important not to put the last \
-#--------------GLOBAL VARS----------------------
-
 
 #--------------ENCRYPT CREDENTIALS---------
 #You must change these values to securely save your credential files
@@ -71,7 +78,7 @@ Connect-VIServer $vCenter -Credential $Cred -ErrorAction Stop | Out-Null
 $now = Get-Date -format "dd-MM-yyyy HH:mm:ss | "
 $log = "`r`n$now vCenter connected!" + $log
 
-$vms = get-datacenter aaa---tata | get-vm
+$vms = get-datacenter $datacenter | get-vm
 $VMsFilteredArray = @("")
 $NothingToDo = 0
 
@@ -122,11 +129,9 @@ $log = "`r`n$now Disconnect vCenter server!" + $log
 Disconnect-VIServer $vCenter -Confirm:$False
 
 
-$now = Get-Date -format "ddMMyyyy_HHmmss"
-$dir = "C:\Program Files (x86)\PRTG Network Monitor\Custom Sensors\EXEXML\log\"
-$file = $now + "_check_cross-storage_debug.log"
-$log | Out-File $dir$file
 
+
+$log | Out-File $OutputDir$OutputFile
 
 ###PRTG OUTPUT
 
