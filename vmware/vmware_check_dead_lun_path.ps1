@@ -2,20 +2,19 @@
 .DESCRIPTION
    This script checks ESXi dead LUN path
 
+   Use PRTG EXE/Script Advanced Sensor
+
 .NOTES 
    File Name  : vmware_check_dead_lun_path.ps1 
    Author     : Miquel Mariano - @miquelMariano | https://miquelmariano.github.io
-   Version    : 5
+   Version    : 6
 
-.USAGE
-   Execute directly
-   
-.CHANGELOG
-   v1 20/04/2017  Script creation
-   v2 07/07/2017  Formatting log output
-   v3 16/10/2017  Formatting for blog post > https://miquelmariano.github.io/2017/10/18/check-ESXi-dead-lun-path/
-   v4 08/11/2019  Add datacenter variable and formatting for PRTG monitoring
-   v5 24/03/2020  Change path to "Import-Module" C:\PS6 > C:\PS (https://miquelmariano.github.io/2019/01/09/instalar-powerCLI-10-windows/)
+   v1 20/04/2017    Script creation
+   v2 07/07/2017    Formatting log output
+   v3 16/10/2017    Formatting for blog post > https://miquelmariano.github.io/2017/10/18/check-ESXi-dead-lun-path/
+   v4 08/11/2019    Add datacenter variable and formatting for PRTG monitoring
+   v5 24/03/2020    Change path to "Import-Module" C:\PS6 > C:\PS (https://miquelmariano.github.io/2019/01/09/instalar-powerCLI-10-windows/)
+   v6 11/05/2020    Add Set-PowerCLIConfiguration section. Mandatory with  PRTG
   
 .EXAMPLE
     .\vmware_check_dead_lun_path.ps1 -vCenter 192.168.241.63 -vCenteruser administrator@vsphere.local -datacenter datacenter_name
@@ -108,7 +107,6 @@ $now = Get-Date -format "dd-MM-yy HH:mm:ss | "
 $log = "`r`n$now Disconnect vCenter server!" + $log
 Disconnect-VIServer $vCenter -Confirm:$False
 
-
 $log | Out-File $OutputDir$OutputFile
 
 ###PRTG OUTPUT
@@ -121,7 +119,6 @@ $XMLOutput += "<result>`n"
 $XMLOutput += "<channel>Total dead paths</channel> `n"
 $XMLOutput += "<value>" + $sum_totaldeadpaths + "</value>`n"
 $XMLOutput += "</result>`n"
-
 
 $XMLOutput += "</prtg>"
 
