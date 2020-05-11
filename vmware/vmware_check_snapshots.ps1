@@ -5,23 +5,24 @@
    IMPORTANT: Requires VMware PowerCLI be installed.
    See: https://miquelmariano.github.io/2019/01/09/instalar-powerCLI-10-windows/
 
+   Use PRTG EXE/Script Sensor
+
 .NOTES 
    File Name  : vmware_check_snapshots.ps1 
    Author     : Miquel Mariano - @miquelMariano | https://miquelmariano.github.io
-   Version    : 1
+   Version    : 6
 
-   v1 13/11/2019  Script creation.
+   v1 13/11/2019    Script creation.
+   v2 11/05/2020    Add Set-PowerCLIConfiguration section. Mandatory with  PRTG
 
 .EXAMPLE
-    .\vmware_check_snapshots.ps1 -vCenter vcenter.lab.local -vCenteruser "MyUsername" -MinAgeInDays 3 -IgnoreList "replica|plantilla" -datacenter datacenter_name
-    Values with % will be replaced by PRTG automatically.
-
-  
+    .\vmware_check_snapshots.ps1 -vCenter "vcenter.lab.local" -vCenteruser "MyUsername" -datacenter "datacenter_name" -MinAgeInDays "3" -IgnoreList "replica|plantilla" 
+   
 #>
 
 #--------------GLOBAL VARS----------------------
 param(
-    [string]$vCenter = "vCenter",
+    [string]$vCenter = "ip",
     [string]$vCenteruser = "administrator@vsphere.local",
     [string]$IgnoreList = "VM1|VM2|VM3",
     [string]$datacenter = "datacenter",
@@ -43,7 +44,6 @@ Import-Module "C:\PS\VMware.VimAutomation.Core\11.5.0.14899560\VMware.VimAutomat
 
 Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false
 Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false -Confirm:$false
-
 
 #--------------ENCRYPT CREDENTIALS---------
 #You must change these values to securely save your credential files

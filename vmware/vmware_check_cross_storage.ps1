@@ -144,7 +144,6 @@ $XMLOutput += "<channel>Num_inconsistencies</channel> `n"
 $XMLOutput += "<value>" + $measure.count + "</value>`n"
 $XMLOutput += "</result>`n"
 
-
 $XMLOutput += "</prtg>"
 
 write-host $XMLOutput
