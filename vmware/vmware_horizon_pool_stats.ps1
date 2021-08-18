@@ -5,7 +5,7 @@
 .NOTES 
    File Name  : vmware_horizon_pool_stats.ps1 
    Author     : Miquel Mariano - @miquelMariano | https://miquelmariano.github.io
-   Version    : 1
+   Version    : 2
    
 .PREREQUISITES   
    Install PowerCLI on PRTG sensor > https://miquelmariano.github.io/2019/01/09/instalar-powerCLI-10-windows/
