@@ -15,6 +15,21 @@
    v1 13/11/2019    Script creation.
    v2 11/05/2020    Add Set-PowerCLIConfiguration section. Mandatory with  PRTG
 
+.PARAMETER Server
+    The name or ip address of the host or vCenter Server
+
+.PARAMETER Username
+    Name of the administrative account needed to authenticate to vSphere.
+
+.PARAMETER Datacenter
+    vSphere Datacenter
+
+.PARAMETER MinAgeInDays
+    Num of days monitoring  
+
+.PARAMETER IgnoreList
+    List of VMs to exclude    
+
 .EXAMPLE
     .\vmware_check_snapshots.ps1 -vCenter "vcenter.lab.local" -vCenteruser "MyUsername" -datacenter "datacenter_name" -MinAgeInDays "3" -IgnoreList "replica|plantilla" 
    
@@ -30,20 +45,24 @@ param(
 )
 
 $PathToCredentials = "C:\Program Files (x86)\PRTG Network Monitor\Custom Sensors\ScriptCredentials\$vCenter" #It is important not to put the last \
+
 #--------------GLOBAL VARS---------
 
 
-#--------------IMPORT POWERSHELL MODULES----------------------
+#--------------IMPORT POWERSHELL MODULES | SET YOUR FOLDER LOCATION----------------------
 Import-Module "C:\PS\VMware.VimAutomation.Sdk\11.5.0.14898111\VMware.VimAutomation.Sdk.psd1"
 Import-Module "C:\PS\VMware.VimAutomation.Common\11.5.0.14898112\VMware.VimAutomation.Common.psd1"
 Import-Module "C:\PS\VMware.Vim\6.7.0.14898114\VMware.Vim.psd1"
 Import-Module "C:\PS\VMware.VimAutomation.Cis.Core\11.5.0.14898113\VMware.VimAutomation.Cis.Core.psd1"
 Import-Module "C:\PS\VMware.VimAutomation.Sdk\11.5.0.14898111\VMware.VimAutomation.Sdk.psd1"
 Import-Module "C:\PS\VMware.VimAutomation.Core\11.5.0.14899560\VMware.VimAutomation.Core.psd1"
-#--------------IMPORT POWERSHELL MODULES----------------------
+#--------------IMPORT POWERSHELL MODULES | SET YOUR FOLDER LOCATION----------------------
 
+#--------------SET POWERCLI CONFIGURATION----------------------
 Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false
 Set-PowerCLIConfiguration -Scope User -ParticipateInCEIP $false -Confirm:$false
+#--------------SET POWERCLI CONFIGURATION----------------------
+
 
 #--------------ENCRYPT CREDENTIALS---------
 #You must change these values to securely save your credential files
