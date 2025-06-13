@@ -2,17 +2,18 @@
 
 #./check_sync_status.sh 00:07 12
 
-LDEV=$1
-instance=$2
+group=$1
+LDEV=$2
+instance=$3
 
 raidcom -login maintenance raid-maintenance -I$instance
 
-result=$(pairdisplay -g GAD -d $LDEV-$LDEV -fxce -l -ITC$instance | grep GAD |awk '{print $10}')
-output=$(pairdisplay -g GAD -d $LDEV-$LDEV -fxce -l -ITC$instance | grep GAD)
+result=$(pairdisplay -g $group -d $group-$LDEV -fxce -l -ITC$instance | grep $group |awk '{print $10}')
+output=$(pairdisplay -g $group -d $group-$LDEV -fxce -l -ITC$instance | grep $group)
 
 #echo $result
 
-echo "0:$result:LDEV $1 is $result % syncronized | $output"
+echo "0:$result:GROUP $1 - LDEV $2 is $result % syncronized | $output"
 
 #if [ $result == "100" ]; then
 #  echo "0:$result:PAIR"

@@ -22,10 +22,9 @@ instance=$1
 #raidcom -login maintenance raid-maintenance -I1
 #raidcom -login maintenance raid-maintenance -I2
 
-used=$(raidcom get pool -pool_id 0 -I$instance | grep 000 |awk '{print $3}')
-sn=$(raidcom get pool -pool_id 0 -I$instance | grep 000 |awk '{print $7}')
+so_version=$(cat /etc/*-release)
 
-echo "0:$used:Pool usage space % on F700 S/N $sn"
+echo "0:0:$so_version"
 
 #logout110=$(raidcom -logout -I1)
 #logout108=$(raidcom -logout -I2)

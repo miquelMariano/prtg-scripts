@@ -2,14 +2,12 @@
 
 #./check_gad.sh 00:07 12
 
-group=$1
-LDEV=$2
-instance=$3
+LDEV=$1
 
 #raidcom -login maintenance raid-maintenance -I$instance
 
-result=$(pairdisplay -g $group -d $group-$LDEV -fxce -l -ITC$instance | grep GAD |awk '{print $7}')
-output=$(pairdisplay -g $group -d $group-$LDEV -fxce -l -ITC$instance | grep GAD)
+result=$(pairdisplay -g GAD -d $LDEV-$LDEV -fxce -l -ITC5901 | grep GAD |awk '{print $7}')
+output=$(pairdisplay -g GAD -d $LDEV-$LDEV -fxce -l -ITC5901 | grep GAD)
 
 #echo $result
 

@@ -12,5 +12,3 @@ if [[ "$result" != "" ]];then
 else
     echo "2:0:Instance horcmd_0$1 not Running"
 fi
-
-
