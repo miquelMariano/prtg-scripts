@@ -3,7 +3,7 @@ param(
 )
 
 # Configuración del clúster Cohesity
-$CohesityCluster = "https://cohesityzamudiotech.ingeteam.local"
+$CohesityCluster = "https://cohesity.mydomain.local"
 $Username = 'prtg'
 $Password = 'AM8qil0g45y^b9b#'
 $Domain = 'LOCAL'  # Cambia según tu dominio (e.g., "LOCAL" o el nombre del dominio)
